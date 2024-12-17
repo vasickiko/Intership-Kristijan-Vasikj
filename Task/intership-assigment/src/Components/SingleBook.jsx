@@ -1,13 +1,30 @@
-function SingleBook({title, author, genre, img }) {
-    return (
-      <div className="flex flex-col w-full sm:w-[20%] lg:w-[15%] p-2 rounded-sm gap-1 sm:gap-0">
-        <img src={img} alt="" className="mb-2 w-full h-auto object-cover"/>
-        <h1 className="font-bold text-3xl sm:text-base text-white">{title}</h1>
-        <p className="text-2xl sm:text-base text-white">{author}</p>
-        <p className="sm:text-xs text-gray-500">{genre}</p>
-      </div>
+function SingleBook({ id, title, author, genre, img, searchQuery }) {
+
+  const highlightMatch = (text) => {
+    if (!searchQuery) return text;
+
+    const regex = new RegExp(`(${searchQuery})`, 'gi'); 
+    const parts = text.split(regex);
+
+    return parts.map((part, index) =>
+      regex.test(part) ? (
+        <span key={index} style={{ fontWeight: 'bold', color: 'red' }}>
+          {part}
+        </span>
+      ) : (
+        part
+      )
     );
-  }
-  
-  export default SingleBook;
-  
+  };
+
+  return (
+    <div className="book-card">
+      <img src={img} alt={title} className="book-card__image" />
+      <h1 className="book-card__title">{highlightMatch(title)}</h1>
+      <p className="book-card__author">{highlightMatch(author)}</p>
+      <p className="book-card__genre">{highlightMatch(genre)}</p>
+    </div>
+  );
+}
+
+export default SingleBook;

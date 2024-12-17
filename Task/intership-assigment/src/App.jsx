@@ -4,8 +4,8 @@ import Home from "./Components/Home";
 function App() {
   return (
     <Router>
-      <div className="flex items-center  justify-center">
-        <div className="container sm:px-0">
+      <div className="app app--centered">
+        <div className="container">
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>
